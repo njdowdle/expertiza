@@ -832,3 +832,28 @@ describe AssignmentForm do
     end
   end
 end
+
+describe '#name_copied_assignment' do
+  context 'when attributes are a simple string and first of its kind' do
+    it 'returns string Copy of string' do
+      expect(AssignmentForm.name_copied_assignment("assign")).to eq("Copy of assign")
+      expect(AssignmentForm.name_copied_assignment("test1_2022")).to eq("Copy of test1_2022")
+    end
+  end
+
+  context 'when attributes are nil or empty and first of its kind' do
+    it 'returns string Copy of ' do
+      expect(AssignmentForm.name_copied_assignment("")).to eq("Copy of ")
+    end
+  end
+
+
+  context 'when attributes are repeated names' do
+    it 'returns string Copy of (number)' do
+      assignment.name="Copy of assign"
+      allow(Assignment).to receive(:find_by).with({:name => "Copy of assign"}).and_return(assignment)
+      allow(Assignment).to receive(:find_by).with({:name => "Copy of assign (1)"}).and_return(nil)
+      expect(AssignmentForm.name_copied_assignment("assign")).to eq("Copy of assign (1)")
+    end
+  end
+end

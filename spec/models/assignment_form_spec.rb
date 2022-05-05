@@ -846,7 +846,6 @@ describe AssignmentForm do
       end
     end
 
-
     context 'when attributes are repeated names' do
       it 'returns string Copy of (number)' do
         assignment.name="Copy of assign"
@@ -854,6 +853,34 @@ describe AssignmentForm do
         allow(Assignment).to receive(:find_by).with({:name => "Copy of assign (1)"}).and_return(nil)
         expect(AssignmentForm.name_copied_assignment("assign")).to eq("Copy of assign (1)")
       end
+    end
+  end
+  
+  describe '#name_copied_directory' do
+    context 'when directory attributes are a simple string and first of its kind' do
+      it 'returns string Copy of path' do
+        allow(Assignment).to receive(:find_by).with({:directory_path => "Copy of path"}).and_return(nil)
+        expect(AssignmentForm.name_copied_directory("path")).to eq("Copy of path")
+        allow(Assignment).to receive(:find_by).with({:directory_path => "Copy of path_to_test1_2022"}).and_return(nil)
+        expect(AssignmentForm.name_copied_directory("path_to_test1_2022")).to eq("Copy of path_to_test1_2022")
+      end
+    end
+
+    context 'when directory attributes are nil or empty and first of its kind' do
+      it 'returns string Copy of ' do
+        allow(Assignment).to receive(:find_by).with({:directory_path => "Copy of "}).and_return(nil)
+        expect(AssignmentForm.name_copied_directory("")).to eq("Copy of ")
+      end
+    end
+
+    context 'when directory attributes are repeated names' do
+      it 'returns string Copy of (path number)' do
+        assignment.name="Copy of assign"
+        assignment.directory_path="path"
+        allow(Assignment).to receive(:find_by).with({:directory_path => "Copy of path"}).and_return(assignment)
+        allow(Assignment).to receive(:find_by).with({:directory_path => "Copy of path (1)"}).and_return(nil)
+        expect(AssignmentForm.name_copied_directory("path")).to eq("Copy of path (1)")
+      end 
     end
   end
 end

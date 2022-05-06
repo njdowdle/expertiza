@@ -28,6 +28,7 @@ describe 'AssignmentTeam' do
     it 'checks if new_team is saved' do
       new_team = team.dup
       new_team.save
+      team.update(:id => 2)
       expect(Team.where(id: 1)).to exist
     end
 

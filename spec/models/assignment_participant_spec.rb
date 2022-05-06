@@ -31,6 +31,7 @@ describe AssignmentParticipant do
     it 'checks if new participant is saved' do
       new_participant = participant.dup
       new_participant.save
+      participant.update(:id => 2)
       expect(Participant.where(id: 1)).to exist
     end
 

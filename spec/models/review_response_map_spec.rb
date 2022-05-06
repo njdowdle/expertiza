@@ -280,4 +280,18 @@ describe ReviewResponseMap do
     allow(Response).to receive(:where).with(map_id: 1).and_return([response2])
     expect(ReviewResponseMap.prepare_review_response(assignment, maps, review_final_versions, round)).to eq([3])
   end
+
+  describe '.copy_review_response_map' do
+    it 'saves new_review_response_map properly' do
+      new_review_response_map = review_response_map.dup
+      expect(new_review_response_map.save).to eq(true)
+    end
+
+    it 'stores in hash properly' do
+      review_response_map_mapping = Hash.new
+      new_review_response_map = original_map.dup
+      review_response_map_mapping.store(review_response_map.id, new_review_response_map.id)
+      expect(review_response_map_mapping.fetch(review_response_map.id).to eq(new_review_response_map.id)
+    end
+  end
 end

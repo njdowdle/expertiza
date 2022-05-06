@@ -30,9 +30,7 @@ describe AssignmentParticipant do
   describe '#copy_participants_for_assignment' do
     it 'checks if new participant is saved' do
       new_participant = participant.dup
-      new_participant.save
-      participant.update(:id => 2)
-      expect(Participant.where(id: 1)).to exist
+      expect(new_participant.save).to eq(true)
     end
 
     it 'stores in hash correctly' do

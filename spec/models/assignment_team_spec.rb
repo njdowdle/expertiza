@@ -27,9 +27,7 @@ describe 'AssignmentTeam' do
   describe '#copy_teams_for_assignment' do
     it 'checks if new_team is saved' do
       new_team = team.dup
-      new_team.save
-      team.update(:id => 2)
-      expect(Team.where(id: 1)).to exist
+      expect(new_team.save).to eq(true)
     end
 
     it 'stores in hash correctly' do

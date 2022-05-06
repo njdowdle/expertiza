@@ -19,8 +19,7 @@ describe SubmissionRecord do
     it 'makes sure to save properly' do
       new_submission_record = submission_record.dup
       submission_record.update(:assignment_id => 2)
-      new_submission_record.save
-      expect(SubmissionRecord.where(assignment_id: 1)).to exist
+      expect(new_submission_record.save).to eq(true)
     end
   end
 end

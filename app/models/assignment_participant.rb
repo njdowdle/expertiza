@@ -53,7 +53,7 @@ class AssignmentParticipant < Participant
     participants_to_copy.each do |original_participant|
       new_participant = original_participant.dup
       new_participant.parent_id = new_assign_id
-      if new_participant.save # should we check it this is successful?
+      if new_participant.save
         participants_mapping.store(original_participant.id, new_participant.id)
       end
     end

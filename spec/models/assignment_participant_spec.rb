@@ -33,6 +33,13 @@ describe AssignmentParticipant do
       new_participant.save
       expect(Participant.where(id: 1)).to exist
     end
+
+    it 'stores in hash correctly' do
+      participants_mapping = Hash.new
+      new_participant = participant.dup
+      participants_mapping.store(participant.id, new_participant.id)
+      expect(participants_mapping.fetch(participant.id)).to eq(new_participant.id)
+    end
   end
 
   describe '#get_reviewer' do

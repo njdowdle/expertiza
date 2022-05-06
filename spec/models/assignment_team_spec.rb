@@ -24,6 +24,22 @@ describe 'AssignmentTeam' do
     end
   end
 
+  describe '#copy_teams_for_assignment' do
+    it 'checks if new_team is saved' do
+      new_team = team.dup
+      new_team.save
+      expect(Team.where(id: 1)).to exist
+    end
+
+    it 'stores in hash correctly' do
+      teams_mapping = Hash.new
+      new_team = team.dup
+      new_team.save
+      teams_mapping.store(team.id, new_team.id)
+      expect(teams_mapping.fetch(team.id)).to eq(new_team.id)
+    end
+  end
+
   describe '#includes?' do
     context 'when an assignment team has one participant' do
       it 'includes one participant' do

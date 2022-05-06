@@ -27,6 +27,14 @@ describe AssignmentParticipant do
     end
   end
 
+  describe '#copy_participants_for_assignment' do
+    it 'checks if new participant is saved' do
+      new_participant = participant.dup
+      new_participant.save
+      expect(Participant.where(id: 1)).to exist
+    end
+  end
+
   describe '#get_reviewer' do
     context 'when the associated assignment is reviewed by his team' do
       it 'returns the team' do
@@ -53,7 +61,7 @@ describe AssignmentParticipant do
       expect(CourseParticipant.first.parent_id).to eq(123)
     end
   end
-
+  
   describe '#feedback' do
     it 'returns corresponding author feedback responses given by current participant' do
       allow(FeedbackResponseMap).to receive(:assessments_for).with(participant).and_return([response])
